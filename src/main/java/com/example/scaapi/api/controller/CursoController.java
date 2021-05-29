@@ -1,4 +1,4 @@
-package com.example.scaapi.api.resource;
+package com.example.scaapi.api.controller;
 
 import com.example.scaapi.model.entity.Curso;
 import com.example.scaapi.service.CursoService;
@@ -13,10 +13,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/cursos")
+@RequestMapping("/api/v1/cursos")
 @RequiredArgsConstructor
-
-public class CursoResource {
+public class CursoController {
 
     private final CursoService service;
 
@@ -28,7 +27,7 @@ public class CursoResource {
 
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
-        Optional<Curso> curso = service.getById(id);
+        Optional<Curso> curso = service.getCursoById(id);
         return ResponseEntity.ok(curso);
     }
 }

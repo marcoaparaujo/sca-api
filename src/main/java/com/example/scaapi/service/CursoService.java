@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CursoService {
@@ -23,7 +22,7 @@ public class CursoService {
         return repository.findAll();
     }
 
-    public Optional<Curso> getById(Long id) {
+    public Optional<Curso> getCursoById(Long id) {
         return repository.findById(id);
     }
 }
