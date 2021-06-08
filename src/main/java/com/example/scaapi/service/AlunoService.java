@@ -24,7 +24,7 @@ public class AlunoService {
     }
 
     public AlunoDTO getAlunoById(Long id) {
-        Optional<Aluno> curso = repository.findById(id);
-        return curso.map(AlunoDTO::create).orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+        Optional<Aluno> aluno = repository.findById(id);
+        return aluno.map(AlunoDTO::create).orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
     }
 }
