@@ -15,10 +15,6 @@ public class Aluno extends Pessoa {
 
     private Integer matricula;
 
-    @OneToOne
-    @JoinColumn(name = "endereco_id")
-    private Endereco endereco;
-
     @ManyToOne
     private Curso curso;
 

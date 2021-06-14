@@ -15,12 +15,14 @@ public class ProfessorDTO {
     private String nome;
     private Long idCurso;
     private String nomeCurso;
+    private Long idEndereco;
 
     public static ProfessorDTO create(Professor professor) {
         ModelMapper modelMapper = new ModelMapper();
         ProfessorDTO dto = modelMapper.map(professor, ProfessorDTO.class);
         assert dto.getIdCurso().equals(professor.getCurso().getId());
         assert dto.getNomeCurso().equals(professor.getCurso().getNome());
+        assert dto.getIdEndereco().equals(professor.getEndereco().getId());
         return dto;
     }
 }

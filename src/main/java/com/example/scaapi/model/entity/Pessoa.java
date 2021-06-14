@@ -17,4 +17,8 @@ public abstract class Pessoa {
     private Long id;
 
     private String nome;
+
+    @OneToOne
+    @JoinColumn(name = "endereco_id")
+    private Endereco endereco;
 }
