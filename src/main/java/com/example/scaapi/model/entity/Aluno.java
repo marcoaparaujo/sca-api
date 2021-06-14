@@ -15,7 +15,8 @@ public class Aluno extends Pessoa {
 
     private Integer matricula;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
     @ManyToOne

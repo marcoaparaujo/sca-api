@@ -18,6 +18,12 @@ public class EnderecoController {
 
     private final EnderecoService service;
 
+    @GetMapping()
+    public ResponseEntity get() {
+        List<EnderecoDTO> enderecos = service.getEnderecos();
+        return ResponseEntity.ok(enderecos);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         EnderecoDTO endereco = service.getEnderecoById(id);

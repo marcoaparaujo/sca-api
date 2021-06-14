@@ -5,7 +5,9 @@ import com.example.scaapi.model.entity.Endereco;
 import com.example.scaapi.model.repository.EnderecoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EnderecoService {
@@ -14,6 +16,11 @@ public class EnderecoService {
 
     public EnderecoService(EnderecoRepository repository) {
         this.repository = repository;
+    }
+
+    public List<EnderecoDTO> getEnderecos() {
+        List<EnderecoDTO> list = repository.findAll().stream().map(EnderecoDTO::create).collect(Collectors.toList());
+        return list;
     }
 
     public EnderecoDTO getEnderecoById(Long id) {
