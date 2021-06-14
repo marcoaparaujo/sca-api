@@ -20,6 +20,9 @@ public class Aluno {
     private Integer matricula;
     private String nome;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Endereco endereco;
+
     @ManyToOne
     private Curso curso;
 
