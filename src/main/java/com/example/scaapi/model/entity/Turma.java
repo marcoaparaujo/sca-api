@@ -21,6 +21,9 @@ public class Turma {
         private Integer semestre;
         private String nome;
 
+        @ManyToOne
+        private Disciplina disciplina;
+
         @ManyToMany
         @JoinTable(name = "turma_aluno",
                 joinColumns = @JoinColumn(name = "turma_id"),
