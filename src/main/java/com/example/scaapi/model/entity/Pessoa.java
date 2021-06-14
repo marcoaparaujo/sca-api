@@ -19,6 +19,5 @@ public abstract class Pessoa {
     private String nome;
 
     @OneToOne
-    @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 }
