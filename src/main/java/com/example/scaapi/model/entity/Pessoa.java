@@ -6,14 +6,15 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Professor extends Pessoa {
+@MappedSuperclass
+public abstract class Pessoa {
 
-    private Integer matricula;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @ManyToOne
-    private Curso curso;
+    private String nome;
 }

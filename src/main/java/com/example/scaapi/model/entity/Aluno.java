@@ -11,14 +11,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Aluno {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Aluno extends Pessoa {
 
     private Integer matricula;
-    private String nome;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Endereco endereco;
