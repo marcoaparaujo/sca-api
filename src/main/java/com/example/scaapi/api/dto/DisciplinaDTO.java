@@ -1,5 +1,6 @@
 package com.example.scaapi.api.dto;
 
+import com.example.scaapi.model.entity.Curso;
 import com.example.scaapi.model.entity.Disciplina;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,14 +16,11 @@ public class DisciplinaDTO {
     private String ementa;
     private String bibliografia;
     private Integer cargaHoraria;
-    private Long idCurso;
-    private String nomeCurso;
+    private Curso curso;
 
     public static DisciplinaDTO create(Disciplina disciplina) {
         ModelMapper modelMapper = new ModelMapper();
         DisciplinaDTO dto = modelMapper.map(disciplina, DisciplinaDTO.class);
-        assert dto.getIdCurso().equals(disciplina.getCurso().getId());
-        assert dto.getNomeCurso().equals(disciplina.getCurso().getNome());
         return dto;
     }
 }

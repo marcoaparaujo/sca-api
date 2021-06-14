@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -16,4 +17,7 @@ public class Professor extends Pessoa {
 
     @ManyToOne
     private Curso curso;
+
+    @OneToMany (mappedBy = "professor")
+    private List<Turma> turmas;
 }

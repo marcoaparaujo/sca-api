@@ -24,6 +24,9 @@ public class Turma {
         @ManyToOne
         private Disciplina disciplina;
 
+        @ManyToOne
+        private Professor professor;
+
         @ManyToMany
         @JoinTable(name = "turma_aluno",
                 joinColumns = @JoinColumn(name = "turma_id"),
