@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,4 +22,7 @@ public class Aluno {
 
     @ManyToOne
     private Curso curso;
+
+    @ManyToMany(mappedBy = "alunos")
+    private List<Turma> turmas;
 }
