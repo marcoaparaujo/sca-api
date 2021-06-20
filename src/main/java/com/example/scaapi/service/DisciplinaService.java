@@ -1,6 +1,5 @@
 package com.example.scaapi.service;
 
-import com.example.scaapi.api.dto.DisciplinaDTO;
 import com.example.scaapi.model.entity.Curso;
 import com.example.scaapi.model.entity.Disciplina;
 import com.example.scaapi.model.repository.DisciplinaRepository;

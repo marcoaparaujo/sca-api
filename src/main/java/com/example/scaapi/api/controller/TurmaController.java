@@ -1,8 +1,13 @@
 package com.example.scaapi.api.controller;
 
+import com.example.scaapi.api.dto.AlunoDTO;
 import com.example.scaapi.api.dto.TurmaDTO;
+import com.example.scaapi.model.entity.Aluno;
+import com.example.scaapi.model.entity.Turma;
+import com.example.scaapi.service.AlunoService;
 import com.example.scaapi.service.TurmaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/turmas")
@@ -17,16 +24,32 @@ import java.util.List;
 public class TurmaController {
 
     private final TurmaService service;
+    private final AlunoService alunoService;
 
     @GetMapping()
     public ResponseEntity get() {
-        List<TurmaDTO> turmas = service.getTurmas();
-        return ResponseEntity.ok(turmas);
+        List<Turma> turmas = service.getTurmas();
+        return ResponseEntity.ok(turmas.stream().map(TurmaDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
-        TurmaDTO turma = service.getTurmaById(id);
-        return ResponseEntity.ok(turma);
+        Optional<Turma> turma = service.getTurmaById(id);
+        if (turma.isEmpty()) {
+            return new ResponseEntity("Turma não encontrada", HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(turma.map(TurmaDTO::create));
+    }
+
+    @GetMapping("{id}/alunos")
+    public ResponseEntity getDisciplinas(@PathVariable("id") Long id) {
+        Optional<Turma> turma = service.getTurmaById(id);
+        if (turma.isEmpty()) {
+            return new ResponseEntity("Turma não encontrada", HttpStatus.NOT_FOUND);
+        }
+        List<Aluno> alunos = alunoService.getAlunosByTurma(turma);
+        return ResponseEntity.ok(alunos.stream().map(AlunoDTO::create).collect(Collectors.toList()));
     }
 }
+
+

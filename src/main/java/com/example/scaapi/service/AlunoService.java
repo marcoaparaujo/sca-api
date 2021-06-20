@@ -1,13 +1,14 @@
 package com.example.scaapi.service;
 
-import com.example.scaapi.api.dto.AlunoDTO;
 import com.example.scaapi.model.entity.Aluno;
+import com.example.scaapi.model.entity.Curso;
+import com.example.scaapi.model.entity.Disciplina;
+import com.example.scaapi.model.entity.Turma;
 import com.example.scaapi.model.repository.AlunoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class AlunoService {
@@ -18,13 +19,16 @@ public class AlunoService {
         this.repository = repository;
     }
 
-    public List<AlunoDTO> getAlunos() {
-        List<AlunoDTO> list = repository.findAll().stream().map(AlunoDTO::create).collect(Collectors.toList());
-        return list;
+    public List<Aluno> getAlunos() {
+        return repository.findAll();
     }
 
-    public AlunoDTO getAlunoById(Long id) {
-        Optional<Aluno> aluno = repository.findById(id);
-        return aluno.map(AlunoDTO::create).orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+    public Optional<Aluno> getAlunoById(Long id) {
+        return repository.findById(id);
     }
+
+    public List<Aluno> getAlunosByTurma(Optional<Turma> turma) {
+        return repository.findByTurmas(turma);
+    }
+
 }
