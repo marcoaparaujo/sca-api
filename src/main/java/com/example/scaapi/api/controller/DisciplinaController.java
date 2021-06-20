@@ -1,8 +1,12 @@
 package com.example.scaapi.api.controller;
 
+import com.example.scaapi.api.dto.CursoDTO;
 import com.example.scaapi.api.dto.DisciplinaDTO;
+import com.example.scaapi.model.entity.Curso;
+import com.example.scaapi.model.entity.Disciplina;
 import com.example.scaapi.service.DisciplinaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/disciplinas")
@@ -20,13 +26,16 @@ public class DisciplinaController {
 
     @GetMapping()
     public ResponseEntity get() {
-        List<DisciplinaDTO> disciplinas = service.getDisciplinas();
-        return ResponseEntity.ok(disciplinas);
+       List<Disciplina> disciplinas = service.getDisciplinas();
+        return ResponseEntity.ok(disciplinas.stream().map(DisciplinaDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
-        DisciplinaDTO disciplina = service.getDisciplinaById(id);
-        return ResponseEntity.ok(disciplina);
+        Optional<Disciplina> disciplina = service.getDisciplinaById(id);
+        if (disciplina.isEmpty()) {
+            return new ResponseEntity("Disciplina não encontrada", HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(disciplina.map(DisciplinaDTO::create));
     }
 }
