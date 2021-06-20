@@ -27,8 +27,4 @@ public class AlunoService {
         return repository.findById(id);
     }
 
-    public List<Aluno> getAlunosByTurma(Optional<Turma> turma) {
-        return repository.findByTurmas(turma);
-    }
-
 }

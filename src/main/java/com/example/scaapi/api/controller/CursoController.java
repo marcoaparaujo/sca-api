@@ -34,7 +34,7 @@ public class CursoController {
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Curso> curso = service.getCursoById(id);
-        if (curso.isEmpty()) {
+        if (!curso.isPresent()) {
             return new ResponseEntity("Curso não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(curso.map(CursoDTO::create));
@@ -43,7 +43,7 @@ public class CursoController {
     @GetMapping("{id}/disciplinas")
     public ResponseEntity getDisciplinas(@PathVariable("id") Long id) {
         Optional<Curso> curso = service.getCursoById(id);
-        if (curso.isEmpty()) {
+        if (!curso.isPresent()) {
             return new ResponseEntity("Curso não encontrado", HttpStatus.NOT_FOUND);
         }
         List<Disciplina> disciplinas = disciplinaService.getDisciplinasByCurso(curso);

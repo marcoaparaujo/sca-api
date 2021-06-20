@@ -31,7 +31,7 @@ public class DisciplinaController {
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Disciplina> disciplina = service.getDisciplinaById(id);
-        if (disciplina.isEmpty()) {
+        if (!disciplina.isPresent()) {
             return new ResponseEntity("Disciplina não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(disciplina.map(DisciplinaDTO::create));

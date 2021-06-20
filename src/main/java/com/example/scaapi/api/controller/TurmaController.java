@@ -2,7 +2,6 @@ package com.example.scaapi.api.controller;
 
 import com.example.scaapi.api.dto.AlunoDTO;
 import com.example.scaapi.api.dto.TurmaDTO;
-import com.example.scaapi.model.entity.Aluno;
 import com.example.scaapi.model.entity.Turma;
 import com.example.scaapi.service.AlunoService;
 import com.example.scaapi.service.TurmaService;
@@ -24,7 +23,6 @@ import java.util.stream.Collectors;
 public class TurmaController {
 
     private final TurmaService service;
-    private final AlunoService alunoService;
 
     @GetMapping()
     public ResponseEntity get() {
@@ -35,7 +33,7 @@ public class TurmaController {
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Turma> turma = service.getTurmaById(id);
-        if (turma.isEmpty()) {
+        if (!turma.isPresent()) {
             return new ResponseEntity("Turma não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(turma.map(TurmaDTO::create));
@@ -44,11 +42,10 @@ public class TurmaController {
     @GetMapping("{id}/alunos")
     public ResponseEntity getDisciplinas(@PathVariable("id") Long id) {
         Optional<Turma> turma = service.getTurmaById(id);
-        if (turma.isEmpty()) {
+        if (!turma.isPresent()) {
             return new ResponseEntity("Turma não encontrada", HttpStatus.NOT_FOUND);
         }
-        List<Aluno> alunos = alunoService.getAlunosByTurma(turma);
-        return ResponseEntity.ok(alunos.stream().map(AlunoDTO::create).collect(Collectors.toList()));
+        return ResponseEntity.ok(turma.get().getAlunos().stream().map(AlunoDTO::create).collect(Collectors.toList()));
     }
 }
 

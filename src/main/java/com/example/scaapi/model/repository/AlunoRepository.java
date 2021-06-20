@@ -9,5 +9,4 @@ import java.util.Optional;
 
 public interface AlunoRepository extends JpaRepository<Aluno, Long> {
 
-    List<Aluno> findByTurmas(Optional<Turma> turma);
 }

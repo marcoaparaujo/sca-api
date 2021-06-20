@@ -32,7 +32,7 @@ public class AlunoController {
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Aluno> aluno = service.getAlunoById(id);
-        if (aluno.isEmpty()) {
+        if (!aluno.isPresent()) {
             return new ResponseEntity("Aluno não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(aluno.map(AlunoDTO::create));
