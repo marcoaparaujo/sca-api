@@ -18,13 +18,11 @@ public class ProfessorService {
         this.repository = repository;
     }
 
-    public List<ProfessorDTO> getProfessores() {
-        List<ProfessorDTO> list = repository.findAll().stream().map(ProfessorDTO::create).collect(Collectors.toList());
-        return list;
+    public List<Professor> getProfessores() {
+        return repository.findAll();
     }
 
-    public ProfessorDTO getProfessorById(Long id) {
-        Optional<Professor> professor = repository.findById(id);
-        return professor.map(ProfessorDTO::create).orElseThrow(() -> new RuntimeException("Professor não encontrado"));
+    public Optional<Professor> getProfessorById(Long id) {
+        return repository.findById(id);
     }
 }
