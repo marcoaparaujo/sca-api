@@ -18,4 +18,9 @@ public class CursoDTO {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(curso, CursoDTO.class);
     }
+
+    public static Curso converter(CursoDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(dto, Curso.class);
+    }
 }

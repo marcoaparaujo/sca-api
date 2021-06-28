@@ -2,6 +2,7 @@ package com.example.scaapi.api.controller;
 
 import com.example.scaapi.api.dto.CursoDTO;
 import com.example.scaapi.api.dto.DisciplinaDTO;
+import com.example.scaapi.exception.RegraNegocioException;
 import com.example.scaapi.model.entity.Curso;
 import com.example.scaapi.model.entity.Disciplina;
 import com.example.scaapi.service.CursoService;
@@ -9,10 +10,8 @@ import com.example.scaapi.service.DisciplinaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,5 +47,16 @@ public class CursoController {
         }
         List<Disciplina> disciplinas = disciplinaService.getDisciplinasByCurso(curso);
         return ResponseEntity.ok(disciplinas.stream().map(DisciplinaDTO::create).collect(Collectors.toList()));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(CursoDTO dto) {
+        try {
+            Curso curso = CursoDTO.converter(dto);
+            curso = service.salvar(curso);
+            return new ResponseEntity(curso, HttpStatus.CREATED);
+        }catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
