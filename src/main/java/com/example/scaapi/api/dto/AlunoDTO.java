@@ -1,19 +1,20 @@
 package com.example.scaapi.api.dto;
 
+import com.example.scaapi.exception.RegraNegocioException;
 import com.example.scaapi.model.entity.Aluno;
+import com.example.scaapi.model.entity.Curso;
 import com.example.scaapi.model.entity.Endereco;
-import com.example.scaapi.model.entity.Turma;
+import com.example.scaapi.service.CursoService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class AlunoDTO {
+
     private Long id;
     private Integer matricula;
     private String nome;
@@ -28,4 +29,5 @@ public class AlunoDTO {
         assert dto.getNomeCurso().equals(aluno.getCurso().getNome());
         return dto;
     }
+
 }

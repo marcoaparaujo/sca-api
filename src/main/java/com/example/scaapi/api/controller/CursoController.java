@@ -8,6 +8,7 @@ import com.example.scaapi.model.entity.Disciplina;
 import com.example.scaapi.service.CursoService;
 import com.example.scaapi.service.DisciplinaService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,11 +53,16 @@ public class CursoController {
     @PostMapping()
     public ResponseEntity post(CursoDTO dto) {
         try {
-            Curso curso = CursoDTO.converter(dto);
+            Curso curso = converter(dto);
             curso = service.salvar(curso);
             return new ResponseEntity(curso, HttpStatus.CREATED);
         }catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    public Curso converter(CursoDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(dto, Curso.class);
     }
 }
