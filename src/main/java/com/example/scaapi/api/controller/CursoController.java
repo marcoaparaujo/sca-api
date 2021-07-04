@@ -61,6 +61,21 @@ public class CursoController {
         }
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, CursoDTO dto) {
+        if (!service.getCursoById(id).isPresent()) {
+            return new ResponseEntity("Curso não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Curso curso = converter(dto);
+            curso.setId(id);
+            service.atualizar(curso);
+            return ResponseEntity.ok(curso);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Curso converter(CursoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(dto, Curso.class);

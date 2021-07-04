@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -32,8 +33,14 @@ public class CursoService {
         return repository.save(curso);
     }
 
-    public void validar(Curso curso) {
+    @Transactional
+    public Curso atualizar(Curso curso) {
+        Objects.requireNonNull(curso.getId());
+        validar(curso);
+        return repository.save(curso);
+    }
 
+    public void validar(Curso curso) {
         if (curso.getNome() == null || curso.getNome().trim().equals("")) {
             throw new RegraNegocioException("Nome inválido");
         }
