@@ -15,12 +15,25 @@ public class ProfessorDTO {
     private Long id;
     private Integer matricula;
     private String nome;
-    private Curso curso;
-    private Endereco endereco;
+    private Long idCurso;
+    private String logradouro;
+    private Integer numero;
+    private String complemento;
+    private String bairro;
+    private String cidade;
+    private String uf;
+    private String cep;
 
     public static ProfessorDTO create(Professor professor) {
         ModelMapper modelMapper = new ModelMapper();
         ProfessorDTO dto = modelMapper.map(professor, ProfessorDTO.class);
+        dto.logradouro = professor.getEndereco().getLogradouro();
+        dto.numero = professor.getEndereco().getNumero();
+        dto.complemento = professor.getEndereco().getComplemento();
+        dto.bairro = professor.getEndereco().getBairro();
+        dto.cidade = professor.getEndereco().getCidade();
+        dto.uf = professor.getEndereco().getUf();
+        dto.cep = professor.getEndereco().getCep();
         return dto;
     }
 }

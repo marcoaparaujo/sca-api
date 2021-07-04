@@ -19,14 +19,24 @@ public class AlunoDTO {
     private Integer matricula;
     private String nome;
     private Long idCurso;
-    private String nomeCurso;
-    private Endereco endereco;
+    private String logradouro;
+    private Integer numero;
+    private String complemento;
+    private String bairro;
+    private String cidade;
+    private String uf;
+    private String cep;
 
     public static AlunoDTO create(Aluno aluno) {
         ModelMapper modelMapper = new ModelMapper();
         AlunoDTO dto = modelMapper.map(aluno, AlunoDTO.class);
-        assert dto.getIdCurso().equals(aluno.getCurso().getId());
-        assert dto.getNomeCurso().equals(aluno.getCurso().getNome());
+        dto.logradouro = aluno.getEndereco().getLogradouro();
+        dto.numero = aluno.getEndereco().getNumero();
+        dto.complemento = aluno.getEndereco().getComplemento();
+        dto.bairro = aluno.getEndereco().getBairro();
+        dto.cidade = aluno.getEndereco().getCidade();
+        dto.uf = aluno.getEndereco().getUf();
+        dto.cep = aluno.getEndereco().getCep();
         return dto;
     }
 

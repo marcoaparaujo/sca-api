@@ -16,11 +16,10 @@ public class DisciplinaDTO {
     private String ementa;
     private String bibliografia;
     private Integer cargaHoraria;
-    private Curso curso;
+    private Long idCurso;
 
     public static DisciplinaDTO create(Disciplina disciplina) {
         ModelMapper modelMapper = new ModelMapper();
-        DisciplinaDTO dto = modelMapper.map(disciplina, DisciplinaDTO.class);
-        return dto;
+        return modelMapper.map(disciplina, DisciplinaDTO.class);
     }
 }

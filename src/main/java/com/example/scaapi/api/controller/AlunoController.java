@@ -5,8 +5,10 @@ import com.example.scaapi.api.dto.AlunoDTO;
 import com.example.scaapi.exception.RegraNegocioException;
 import com.example.scaapi.model.entity.Aluno;
 import com.example.scaapi.model.entity.Curso;
+import com.example.scaapi.model.entity.Endereco;
 import com.example.scaapi.service.AlunoService;
 import com.example.scaapi.service.CursoService;
+import com.example.scaapi.service.EnderecoService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,7 @@ public class AlunoController {
 
     private final AlunoService service;
     private final CursoService cursoService;
+    private final EnderecoService enderecoService;
 
     @GetMapping()
     public ResponseEntity get() {
@@ -44,9 +47,11 @@ public class AlunoController {
     public ResponseEntity post(AlunoDTO dto) {
         try {
             Aluno aluno = converter(dto);
+            Endereco endereco = enderecoService.salvar(aluno.getEndereco());
+            aluno.setEndereco(endereco);
             aluno = service.salvar(aluno);
             return new ResponseEntity(aluno, HttpStatus.CREATED);
-        }catch (RegraNegocioException e) {
+        } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -54,6 +59,8 @@ public class AlunoController {
     public Aluno converter(AlunoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Aluno aluno = modelMapper.map(dto, Aluno.class);
+        Endereco endereco = modelMapper.map(dto, Endereco.class);
+        aluno.setEndereco(endereco);
         if (dto.getIdCurso() != null) {
             Optional<Curso> curso = cursoService.getCursoById(dto.getIdCurso());
             if (!curso.isPresent()) {

@@ -20,14 +20,12 @@ public class TurmaDTO {
     private Integer ano;
     private Integer semestre;
     private String nome;
-    private Disciplina disciplina;
+    private Long idDisciplina;
     private Long idProfessor;
 
     public static TurmaDTO create(Turma turma) {
         ModelMapper modelMapper = new ModelMapper();
-        TurmaDTO dto = modelMapper.map(turma, TurmaDTO.class);
-        assert dto.getIdProfessor().equals(turma.getProfessor().getId());
-        return dto;
+        return modelMapper.map(turma, TurmaDTO.class);
     }
 }
 

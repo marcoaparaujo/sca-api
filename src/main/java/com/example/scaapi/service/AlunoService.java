@@ -1,11 +1,9 @@
 package com.example.scaapi.service;
 
 import com.example.scaapi.exception.RegraNegocioException;
-import com.example.scaapi.model.entity.Aluno;
-import com.example.scaapi.model.entity.Curso;
-import com.example.scaapi.model.entity.Disciplina;
-import com.example.scaapi.model.entity.Turma;
+import com.example.scaapi.model.entity.*;
 import com.example.scaapi.model.repository.AlunoRepository;
+import com.example.scaapi.model.repository.EnderecoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +30,8 @@ public class AlunoService {
     @Transactional
     public Aluno salvar(Aluno aluno) {
         validar(aluno);
-        return repository.save(aluno);
+        aluno = repository.save(aluno);
+        return aluno;
     }
 
     public void validar(Aluno aluno) {

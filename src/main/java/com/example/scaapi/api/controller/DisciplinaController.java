@@ -1,15 +1,17 @@
 package com.example.scaapi.api.controller;
 
+import com.example.scaapi.api.dto.CursoDTO;
 import com.example.scaapi.api.dto.DisciplinaDTO;
+import com.example.scaapi.exception.RegraNegocioException;
+import com.example.scaapi.model.entity.Curso;
 import com.example.scaapi.model.entity.Disciplina;
+import com.example.scaapi.service.CursoService;
 import com.example.scaapi.service.DisciplinaService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 public class DisciplinaController {
 
     private final DisciplinaService service;
+    private final CursoService cursoService;
 
     @GetMapping()
     public ResponseEntity get() {
@@ -35,5 +38,30 @@ public class DisciplinaController {
             return new ResponseEntity("Disciplina não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(disciplina.map(DisciplinaDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(DisciplinaDTO dto) {
+        try {
+            Disciplina disciplina = converter(dto);
+            disciplina = service.salvar(disciplina);
+            return new ResponseEntity(disciplina, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public Disciplina converter(DisciplinaDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        Disciplina disciplina = modelMapper.map(dto, Disciplina.class);
+        if (dto.getIdCurso() != null) {
+            Optional<Curso> curso = cursoService.getCursoById(dto.getIdCurso());
+            if (!curso.isPresent()) {
+                disciplina.setCurso(null);
+            } else {
+                disciplina.setCurso(curso.get());
+            }
+        }
+        return disciplina;
     }
 }

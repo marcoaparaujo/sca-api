@@ -56,7 +56,7 @@ public class CursoController {
             Curso curso = converter(dto);
             curso = service.salvar(curso);
             return new ResponseEntity(curso, HttpStatus.CREATED);
-        }catch (RegraNegocioException e) {
+        } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

@@ -18,6 +18,6 @@ public class Professor extends Pessoa {
     @ManyToOne
     private Curso curso;
 
-    @OneToMany (mappedBy = "professor")
-    private List<Turma> turmas;
+//    @OneToMany (mappedBy = "professor")
+//    private List<Turma> turmas;
 }
