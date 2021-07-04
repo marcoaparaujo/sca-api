@@ -1,7 +1,5 @@
 package com.example.scaapi.api.dto;
 
-import com.example.scaapi.model.entity.Curso;
-import com.example.scaapi.model.entity.Endereco;
 import com.example.scaapi.model.entity.Professor;
 import lombok.AllArgsConstructor;
 import lombok.Data;

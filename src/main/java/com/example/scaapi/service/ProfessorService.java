@@ -1,8 +1,6 @@
 package com.example.scaapi.service;
 
-import com.example.scaapi.api.dto.ProfessorDTO;
 import com.example.scaapi.exception.RegraNegocioException;
-import com.example.scaapi.model.entity.Aluno;
 import com.example.scaapi.model.entity.Professor;
 import com.example.scaapi.model.repository.ProfessorRepository;
 import org.springframework.stereotype.Service;
@@ -10,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ProfessorService {

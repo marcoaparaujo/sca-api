@@ -1,6 +1,5 @@
 package com.example.scaapi.service;
 
-import com.example.scaapi.model.entity.Aluno;
 import com.example.scaapi.model.entity.Endereco;
 import com.example.scaapi.model.repository.EnderecoRepository;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,5 @@
 package com.example.scaapi.api.controller;
 
-import com.example.scaapi.api.dto.CursoDTO;
 import com.example.scaapi.api.dto.DisciplinaDTO;
 import com.example.scaapi.exception.RegraNegocioException;
 import com.example.scaapi.model.entity.Curso;

@@ -4,7 +4,6 @@ import com.example.scaapi.api.dto.AlunoDTO;
 import com.example.scaapi.api.dto.TurmaDTO;
 import com.example.scaapi.exception.RegraNegocioException;
 import com.example.scaapi.model.entity.*;
-import com.example.scaapi.service.AlunoService;
 import com.example.scaapi.service.DisciplinaService;
 import com.example.scaapi.service.ProfessorService;
 import com.example.scaapi.service.TurmaService;
@@ -26,7 +25,6 @@ public class TurmaController {
     private final TurmaService service;
     private final DisciplinaService disciplinaService;
     private final ProfessorService professorService;
-    private final AlunoService alunoService;
 
     @GetMapping()
     public ResponseEntity get() {
