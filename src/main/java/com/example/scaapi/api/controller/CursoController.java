@@ -69,7 +69,7 @@ public class CursoController {
         try {
             Curso curso = converter(dto);
             curso.setId(id);
-            service.atualizar(curso);
+            service.salvar(curso);
             return ResponseEntity.ok(curso);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

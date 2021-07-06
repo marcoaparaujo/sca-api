@@ -29,8 +29,7 @@ public class ProfessorService {
     @Transactional
     public Professor salvar(Professor professor) {
         validar(professor);
-        professor = repository.save(professor);
-        return professor;
+        return repository.save(professor);
     }
 
     public void validar(Professor professor) {

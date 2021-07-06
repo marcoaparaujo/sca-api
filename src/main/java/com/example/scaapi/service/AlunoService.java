@@ -30,8 +30,7 @@ public class AlunoService {
     @Transactional
     public Aluno salvar(Aluno aluno) {
         validar(aluno);
-        aluno = repository.save(aluno);
-        return aluno;
+        return repository.save(aluno);
     }
 
     public void validar(Aluno aluno) {

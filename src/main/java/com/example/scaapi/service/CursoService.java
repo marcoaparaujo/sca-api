@@ -33,13 +33,6 @@ public class CursoService {
         return repository.save(curso);
     }
 
-    @Transactional
-    public Curso atualizar(Curso curso) {
-        Objects.requireNonNull(curso.getId());
-        validar(curso);
-        return repository.save(curso);
-    }
-
     public void validar(Curso curso) {
         if (curso.getNome() == null || curso.getNome().trim().equals("")) {
             throw new RegraNegocioException("Nome inválido");

@@ -29,8 +29,7 @@ public class TurmaService {
     @Transactional
     public Turma salvar(Turma turma) {
         validar(turma);
-        turma = repository.save(turma);
-        return turma;
+        return repository.save(turma);
     }
 
     public void validar(Turma turma) {
