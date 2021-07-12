@@ -49,6 +49,20 @@ public class DisciplinaController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, DisciplinaDTO dto) {
+        if (!service.getDisciplinaById(id).isPresent()) {
+            return new ResponseEntity("Disciplina não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Disciplina disciplina = converter(dto);
+            disciplina.setId(id);
+            service.salvar(disciplina);
+            return ResponseEntity.ok(disciplina);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
     public Disciplina converter(DisciplinaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();

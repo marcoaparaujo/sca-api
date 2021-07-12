@@ -56,6 +56,23 @@ public class AlunoController {
         }
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, AlunoDTO dto) {
+        if (!service.getAlunoById(id).isPresent()) {
+            return new ResponseEntity("Aluno não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Aluno aluno = converter(dto);
+            aluno.setId(id);
+            Endereco endereco = enderecoService.salvar(aluno.getEndereco());
+            aluno.setEndereco(endereco);
+            service.salvar(aluno);
+            return ResponseEntity.ok(aluno);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Aluno converter(AlunoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Aluno aluno = modelMapper.map(dto, Aluno.class);

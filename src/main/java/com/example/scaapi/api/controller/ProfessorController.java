@@ -55,6 +55,23 @@ public class ProfessorController {
         }
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, ProfessorDTO dto) {
+        if (!service.getProfessorById(id).isPresent()) {
+            return new ResponseEntity("Professor não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Professor professor = converter(dto);
+            professor.setId(id);
+            Endereco endereco = enderecoService.salvar(professor.getEndereco());
+            professor.setEndereco(endereco);
+            service.salvar(professor);
+            return ResponseEntity.ok(professor);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Professor converter(ProfessorDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Professor professor = modelMapper.map(dto, Professor.class);

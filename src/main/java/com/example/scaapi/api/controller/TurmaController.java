@@ -61,6 +61,21 @@ public class TurmaController {
         }
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, TurmaDTO dto) {
+        if (!service.getTurmaById(id).isPresent()) {
+            return new ResponseEntity("Turma não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Turma turma = converter(dto);
+            turma.setId(id);
+            service.salvar(turma);
+            return ResponseEntity.ok(turma);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Turma converter(TurmaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Turma turma = modelMapper.map(dto, Turma.class);
