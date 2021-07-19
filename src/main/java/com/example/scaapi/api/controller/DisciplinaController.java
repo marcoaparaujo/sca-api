@@ -64,6 +64,20 @@ public class DisciplinaController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Disciplina> disciplina = service.getDisciplinaById(id);
+        if (!disciplina.isPresent()) {
+            return new ResponseEntity("Disciplina não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(disciplina.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Disciplina converter(DisciplinaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Disciplina disciplina = modelMapper.map(dto, Disciplina.class);

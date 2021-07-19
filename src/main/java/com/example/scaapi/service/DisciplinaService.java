@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -35,6 +36,12 @@ public class DisciplinaService {
     public Disciplina salvar(Disciplina disciplina) {
         validar(disciplina);
         return repository.save(disciplina);
+    }
+
+    @Transactional
+    public void excluir(Disciplina disciplina) {
+        Objects.requireNonNull(disciplina.getId());
+        repository.delete(disciplina);
     }
 
     public void validar(Disciplina disciplina) {

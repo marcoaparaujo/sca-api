@@ -1,13 +1,13 @@
 package com.example.scaapi.service;
 
 import com.example.scaapi.exception.RegraNegocioException;
-import com.example.scaapi.model.entity.Aluno;
 import com.example.scaapi.model.entity.Turma;
 import com.example.scaapi.model.repository.TurmaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -30,6 +30,12 @@ public class TurmaService {
     public Turma salvar(Turma turma) {
         validar(turma);
         return repository.save(turma);
+    }
+
+    @Transactional
+    public void excluir(Turma turma) {
+        Objects.requireNonNull(turma.getId());
+        repository.delete(turma);
     }
 
     public void validar(Turma turma) {

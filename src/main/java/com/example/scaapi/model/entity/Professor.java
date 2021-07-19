@@ -1,5 +1,6 @@
 package com.example.scaapi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class Professor extends Pessoa {
     @ManyToOne
     private Curso curso;
 
-//    @OneToMany (mappedBy = "professor")
-//    private List<Turma> turmas;
+    @JsonIgnore
+    @OneToMany (mappedBy = "professor")
+    private List<Turma> turmas;
 }

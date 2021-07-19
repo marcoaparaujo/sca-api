@@ -73,6 +73,20 @@ public class AlunoController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Aluno> aluno = service.getAlunoById(id);
+        if (!aluno.isPresent()) {
+            return new ResponseEntity("Aluno não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(aluno.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Aluno converter(AlunoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Aluno aluno = modelMapper.map(dto, Aluno.class);

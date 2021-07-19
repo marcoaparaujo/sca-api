@@ -18,6 +18,6 @@ public abstract class Pessoa {
 
     private String nome;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Endereco endereco;
 }

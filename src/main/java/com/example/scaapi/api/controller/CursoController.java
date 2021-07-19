@@ -76,6 +76,20 @@ public class CursoController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Curso> curso = service.getCursoById(id);
+        if (!curso.isPresent()) {
+            return new ResponseEntity("Curso não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(curso.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Curso converter(CursoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(dto, Curso.class);

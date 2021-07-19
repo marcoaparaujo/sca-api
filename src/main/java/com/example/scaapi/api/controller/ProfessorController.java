@@ -2,6 +2,7 @@ package com.example.scaapi.api.controller;
 
 import com.example.scaapi.api.dto.ProfessorDTO;
 import com.example.scaapi.exception.RegraNegocioException;
+import com.example.scaapi.model.entity.Aluno;
 import com.example.scaapi.model.entity.Curso;
 import com.example.scaapi.model.entity.Endereco;
 import com.example.scaapi.model.entity.Professor;
@@ -67,6 +68,20 @@ public class ProfessorController {
             professor.setEndereco(endereco);
             service.salvar(professor);
             return ResponseEntity.ok(professor);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Professor> professor = service.getProfessorById(id);
+        if (!professor.isPresent()) {
+            return new ResponseEntity("Professor não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(professor.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
