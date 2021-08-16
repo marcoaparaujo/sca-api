@@ -7,6 +7,7 @@ import com.example.scaapi.model.entity.Curso;
 import com.example.scaapi.model.entity.Disciplina;
 import com.example.scaapi.service.CursoService;
 import com.example.scaapi.service.DisciplinaService;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/cursos")
 @RequiredArgsConstructor
+@Api("API de Cursos")
 public class CursoController {
 
     private final CursoService service;
@@ -32,7 +34,12 @@ public class CursoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity get(@PathVariable("id") Long id) {
+    @ApiOperation("Obter detalhes de um curso")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Curso encontrado"),
+            @ApiResponse(code = 404, message = "Curso não encontrado")
+    })
+    public ResponseEntity get(@PathVariable("id") @ApiParam("Id do curso") Long id) {
         Optional<Curso> curso = service.getCursoById(id);
         if (!curso.isPresent()) {
             return new ResponseEntity("Curso não encontrado", HttpStatus.NOT_FOUND);
@@ -51,6 +58,11 @@ public class CursoController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva um novo curso")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Curso salvo com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar o curso")
+    })
     public ResponseEntity post(CursoDTO dto) {
         try {
             Curso curso = converter(dto);
